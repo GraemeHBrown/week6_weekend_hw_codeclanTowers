@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codeClanTowers.iml" filepath="$PROJECT_DIR$/.idea/modules/codeClanTowers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codeClanTowers_main.iml" filepath="$PROJECT_DIR$/.idea/modules/codeClanTowers_main.iml" group="codeClanTowers" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codeClanTowers_test.iml" filepath="$PROJECT_DIR$/.idea/modules/codeClanTowers_test.iml" group="codeClanTowers" />
+    </modules>
+  </component>
+</project>
