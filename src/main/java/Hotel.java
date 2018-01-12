@@ -22,3 +22,7 @@ public class Hotel {
     }
 
 }
+
+//TODO refactor list of rooms to be lists of different room subclasses
+//TODO add checkin method
+//TODO check which guests are in a room

@@ -12,6 +12,11 @@ public class Room {
         this.chargeable = chargeable;
     }
 
+    public Room(int capacity){
+        this.capacity = capacity;
+        guests = new ArrayList<>();
+    }
+
     public int getCapacity() {
         return this.capacity;
     }

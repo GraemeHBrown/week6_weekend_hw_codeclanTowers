@@ -3,8 +3,8 @@ public class ConferenceRoom extends Room {
 
     private String name;
 
-    public ConferenceRoom(int capacity, String name, boolean chargeable) {
-        super(capacity, chargeable);
+    public ConferenceRoom(int capacity, String name) {
+        super(capacity);
         this.name = name;
     }
 
