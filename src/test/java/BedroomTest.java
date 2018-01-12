@@ -9,7 +9,7 @@ public class BedroomTest {
 
     @Before
     public void before(){
-        bedroom = new Bedroom(2, 101);
+        bedroom = new Bedroom(2, 101, RoomType.DOUBLE);
     }
 
     @Test
@@ -20,5 +20,15 @@ public class BedroomTest {
     @Test
     public void bedroomHasNumber(){
         assertEquals(101, bedroom.getBedroomNumber());
+    }
+
+    @Test
+    public void bedroomHasType(){
+        assertEquals(RoomType.DOUBLE, bedroom.getType());
+    }
+
+    @Test
+    public void bedroomTypeHasCapacityValue(){
+        assertEquals(RoomType.DOUBLE.getRoomCapacity(), bedroom.getType().getRoomCapacity());
     }
 }
