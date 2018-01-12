@@ -9,7 +9,6 @@ public class Hotel {
         rooms = new ArrayList<>();
     }
 
-
     public String getName() {
         return this.name;
     }
