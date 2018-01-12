@@ -4,10 +4,12 @@ public class Room {
 
     private int capacity;
     private ArrayList<Guest> guests;
+    private boolean chargeable;
 
-    public Room (int capacity){
+    public Room (int capacity, boolean chargeable){
         this.capacity = capacity;
         guests = new ArrayList<>();
+        this.chargeable = chargeable;
     }
 
     public int getCapacity() {
@@ -22,5 +24,13 @@ public class Room {
 
     public int guestCount() {
         return this.guests.size();
+    }
+
+    public boolean isChargeable() {
+        return chargeable;
+    }
+
+    public void setChargeable(boolean chargeable) {
+        this.chargeable = chargeable;
     }
 }

@@ -11,7 +11,7 @@ public class RoomTest {
 
     @Before
     public void before(){
-        room = new Room(2);
+        room = new Room(2,true);
     }
 
     @Test
