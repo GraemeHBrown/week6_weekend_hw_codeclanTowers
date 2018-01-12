@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class HotelTest {
 
@@ -21,6 +22,11 @@ public class HotelTest {
     public void canSetHotelName(){
         hotel.setName("The Balmoral");
         assertEquals("The Balmoral", hotel.getName());
+    }
+
+    @Test
+    public void hotelHasListOfRooms(){
+        assertNotNull(hotel.getRooms());
     }
 
 }
