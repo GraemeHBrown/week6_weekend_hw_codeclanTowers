@@ -2,11 +2,15 @@ import java.util.ArrayList;
 
 public class Hotel {
     private String name;
-    private ArrayList<Room> rooms;
+    private ArrayList<Bedroom> bedRooms;
+    private ArrayList<DiningRoom> diningRooms;
+    private ArrayList<ConferenceRoom> conferenceRooms;
 
     public Hotel(String name) {
         this.name = name;
-        rooms = new ArrayList<>();
+        bedRooms = new ArrayList<>();
+        diningRooms = new ArrayList<>();
+        conferenceRooms = new ArrayList<>();
     }
 
     public String getName() {
@@ -17,12 +21,19 @@ public class Hotel {
         this.name = name;
     }
 
-    public ArrayList<Room> getRooms() {
-        return this.rooms;
+    public ArrayList<Bedroom> getBedRooms() {
+        return this.bedRooms;
     }
 
+    public ArrayList<DiningRoom> getDiningRooms() {
+        return diningRooms;
+    }
+
+    public ArrayList<ConferenceRoom> getConferenceRooms() {
+        return conferenceRooms;
+    }
 }
 
-//TODO refactor list of rooms to be lists of different room subclasses
+
 //TODO add checkin method
 //TODO check which guests are in a room

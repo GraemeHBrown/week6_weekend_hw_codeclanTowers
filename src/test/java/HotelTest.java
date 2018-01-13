@@ -25,8 +25,18 @@ public class HotelTest {
     }
 
     @Test
-    public void hotelHasListOfRooms(){
-        assertNotNull(hotel.getRooms());
+    public void hotelHasListOfBedRooms(){
+        assertNotNull(hotel.getBedRooms());
+    }
+
+    @Test
+    public void hotelHasListOfDiningRooms(){
+        assertNotNull(hotel.getDiningRooms());
+    }
+
+    @Test
+    public void hotelHasListOfConferenceRooms(){
+        assertNotNull(hotel.getConferenceRooms());
     }
 
 }
