@@ -42,4 +42,8 @@ public class Room {
     public void addGuestToRoom(Guest guest) {
         guests.add(guest);
     }
+
+    public ArrayList<Guest> getGuests() {
+        return this.guests;
+    }
 }

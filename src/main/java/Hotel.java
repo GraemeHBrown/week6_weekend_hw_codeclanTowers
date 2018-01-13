@@ -1,14 +1,18 @@
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 
 public class Hotel {
     private String name;
-    private ArrayList<Bedroom> bedRooms;
+    private ArrayList<Bedroom> availableBedRooms;
+    private ArrayList<Bedroom> occupiedBedRooms;
     private ArrayList<DiningRoom> diningRooms;
     private ArrayList<ConferenceRoom> conferenceRooms;
 
     public Hotel(String name) {
         this.name = name;
-        bedRooms = new ArrayList<>();
+        availableBedRooms = new ArrayList<>();
+        occupiedBedRooms = new ArrayList<>();
         diningRooms = new ArrayList<>();
         conferenceRooms = new ArrayList<>();
     }
@@ -21,8 +25,12 @@ public class Hotel {
         this.name = name;
     }
 
-    public ArrayList<Bedroom> getBedRooms() {
-        return this.bedRooms;
+    public ArrayList<Bedroom> getAvailableBedRooms() {
+        return this.availableBedRooms;
+    }
+
+    public ArrayList<Bedroom> getOccupiedBedRooms() {
+        return occupiedBedRooms;
     }
 
     public ArrayList<DiningRoom> getDiningRooms() {
@@ -33,11 +41,11 @@ public class Hotel {
         return conferenceRooms;
     }
 
-    public void manageBedrooms(Bedroom bedRoom, String action){
-        if (action .equals("ADD")){
-            bedRooms.add(bedRoom);
-        } else if (action .equals("REMOVE")){
-            bedRooms.remove(bedRoom);
+    public void manageAvailableBedrooms(Bedroom bedRoom, RoomManagementActions action){
+        if (action .equals(RoomManagementActions.ADD)){
+            availableBedRooms.add(bedRoom);
+        } else if (action .equals(RoomManagementActions.REMOVE)){
+            availableBedRooms.remove(bedRoom);
         }
     }
 
@@ -49,6 +57,8 @@ public class Hotel {
             for (Guest guest : guests) {
                 roomToFill.addGuestToRoom(guest);
             }
+            manageAvailableBedrooms(roomToFill,RoomManagementActions.REMOVE);
+            manageOccupiedBedrooms(roomToFill, RoomManagementActions.ADD);
             checkInMessage = "Successful check in.";
         } else {
             checkInMessage = "Sorry no rooms available.";
@@ -57,8 +67,27 @@ public class Hotel {
 
     }
 
+    public void manageOccupiedBedrooms(Bedroom bedroom, RoomManagementActions action) {
+        if (action .equals(RoomManagementActions.ADD)){
+            occupiedBedRooms.add(bedroom);
+        } else if (action .equals(RoomManagementActions.REMOVE)){
+            occupiedBedRooms.remove(bedroom);
+        }
+    }
+
+    public ArrayList<Guest> findGuestsForRoom(int roomNumber) {
+        ArrayList<Guest> guestsCheckedIntoRoom = new ArrayList<>();
+        for(Bedroom occupiedRoom: occupiedBedRooms){
+            if(roomNumber == occupiedRoom.getBedroomNumber()){
+                guestsCheckedIntoRoom = occupiedRoom.getGuests();
+            }
+        }
+        return guestsCheckedIntoRoom;
+    }
+
+    @Nullable
     private Bedroom findAvailableRoomForGuests(int numberOfGuestsToCheckIn) {
-        for (Bedroom room : bedRooms) {
+        for (Bedroom room : availableBedRooms) {
             if (room.getCapacity() >= numberOfGuestsToCheckIn && room.guestCount() == 0) {
                 return room;
             }
@@ -66,7 +95,12 @@ public class Hotel {
         return null;
     }
 
+
+
 }
 
 
-//TODO check which guests are in a bedroom passing in bedroom number?
+
+//TODO check out process (starts by taking room number)
+//TODO display vacant rooms
+
