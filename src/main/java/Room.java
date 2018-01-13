@@ -32,10 +32,14 @@ public class Room {
     }
 
     public boolean isChargeable() {
-        return chargeable;
+        return this.chargeable;
     }
 
     public void setChargeable(boolean chargeable) {
         this.chargeable = chargeable;
+    }
+
+    public void addGuestToRoom(Guest guest) {
+        guests.add(guest);
     }
 }

@@ -32,8 +32,41 @@ public class Hotel {
     public ArrayList<ConferenceRoom> getConferenceRooms() {
         return conferenceRooms;
     }
+
+    public void manageBedrooms(Bedroom bedRoom, String action){
+        if (action .equals("ADD")){
+            bedRooms.add(bedRoom);
+        } else if (action .equals("REMOVE")){
+            bedRooms.remove(bedRoom);
+        }
+    }
+
+    public String checkInGuests(ArrayList<Guest> guests) {
+        String checkInMessage;
+        int numberOfGuestsToCheckIn = guests.size();
+        Bedroom roomToFill = findAvailableRoomForGuests(numberOfGuestsToCheckIn);
+        if (roomToFill != null) {
+            for (Guest guest : guests) {
+                roomToFill.addGuestToRoom(guest);
+            }
+            checkInMessage = "Successful check in.";
+        } else {
+            checkInMessage = "Sorry no rooms available.";
+        }
+        return checkInMessage;
+
+    }
+
+    private Bedroom findAvailableRoomForGuests(int numberOfGuestsToCheckIn) {
+        for (Bedroom room : bedRooms) {
+            if (room.getCapacity() >= numberOfGuestsToCheckIn && room.guestCount() == 0) {
+                return room;
+            }
+        }
+        return null;
+    }
+
 }
 
 
-//TODO add checkin method
-//TODO check which guests are in a room
+//TODO check which guests are in a bedroom passing in bedroom number?

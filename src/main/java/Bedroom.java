@@ -30,4 +30,5 @@ public class Bedroom extends Room {
     public void setRate(BigDecimal rate) {
         this.rate = rate;
     }
+
 }
