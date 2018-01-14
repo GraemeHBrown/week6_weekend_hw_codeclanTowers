@@ -41,10 +41,10 @@ public class Hotel {
         return conferenceRooms;
     }
 
-    public void manageAvailableBedrooms(Bedroom bedRoom, RoomManagementActions action){
-        if (action .equals(RoomManagementActions.ADD)){
+    public void manageAvailableBedrooms(Bedroom bedRoom, RoomManagementActions action) {
+        if (action.equals(RoomManagementActions.ADD)) {
             availableBedRooms.add(bedRoom);
-        } else if (action .equals(RoomManagementActions.REMOVE)){
+        } else if (action.equals(RoomManagementActions.REMOVE)) {
             availableBedRooms.remove(bedRoom);
         }
     }
@@ -57,7 +57,7 @@ public class Hotel {
             for (Guest guest : guests) {
                 roomToFill.addGuestToRoom(guest);
             }
-            manageAvailableBedrooms(roomToFill,RoomManagementActions.REMOVE);
+            manageAvailableBedrooms(roomToFill, RoomManagementActions.REMOVE);
             manageOccupiedBedrooms(roomToFill, RoomManagementActions.ADD);
             checkInMessage = "Successful check in.";
         } else {
@@ -68,21 +68,47 @@ public class Hotel {
     }
 
     public void manageOccupiedBedrooms(Bedroom bedroom, RoomManagementActions action) {
-        if (action .equals(RoomManagementActions.ADD)){
+        if (action.equals(RoomManagementActions.ADD)) {
             occupiedBedRooms.add(bedroom);
-        } else if (action .equals(RoomManagementActions.REMOVE)){
+        } else if (action.equals(RoomManagementActions.REMOVE)) {
             occupiedBedRooms.remove(bedroom);
         }
     }
 
     public ArrayList<Guest> findGuestsForRoom(int roomNumber) {
         ArrayList<Guest> guestsCheckedIntoRoom = new ArrayList<>();
-        for(Bedroom occupiedRoom: occupiedBedRooms){
-            if(roomNumber == occupiedRoom.getBedroomNumber()){
+        for (Bedroom occupiedRoom : occupiedBedRooms) {
+            if (roomNumber == occupiedRoom.getBedroomNumber()) {
                 guestsCheckedIntoRoom = occupiedRoom.getGuests();
             }
         }
         return guestsCheckedIntoRoom;
+    }
+
+    public String checkOutGuests(int roomNumber) {
+        String checkOutMessage;
+        Bedroom roomToCheckOutFrom = findRoomByRoomNumber(roomNumber);
+        if (roomToCheckOutFrom != null) {
+            for (Guest guestToCheckOut : roomToCheckOutFrom.getGuests()) {
+                roomToCheckOutFrom.removeGuestFromRoom(guestToCheckOut);
+            }
+            manageAvailableBedrooms(roomToCheckOutFrom, RoomManagementActions.ADD);
+            manageOccupiedBedrooms(roomToCheckOutFrom, RoomManagementActions.REMOVE);
+            checkOutMessage = "Guests successfully checked out.";
+        } else {
+            checkOutMessage = "Sorry there has been a problem with checkout!";
+        }
+        return checkOutMessage;
+    }
+
+    @Nullable
+    private Bedroom findRoomByRoomNumber(int roomNumber) {
+        for (Bedroom roomToCheckOutFrom : occupiedBedRooms) {
+            if (roomNumber == roomToCheckOutFrom.getBedroomNumber()) {
+                return roomToCheckOutFrom;
+            }
+        }
+        return null;
     }
 
     @Nullable
@@ -96,11 +122,7 @@ public class Hotel {
     }
 
 
-
 }
 
 
-
-//TODO check out process (starts by taking room number)
-//TODO display vacant rooms
 

@@ -74,39 +74,53 @@ public class HotelTest {
     }
 
     @Test
-    public void checkingGuestIntoBedroomIncreasesGuestCountForRoom(){
+    public void checkingGuestIntoBedroomIncreasesGuestCountForRoomByTheNumberOfGuestsCheckedIn(){
+        int bedroom1GuestCountBefore = bedroom1.guestCount();
+        int guestCount = guests.size();
         hotel.checkInGuests(guests);
-        assertEquals(2, bedroom1.guestCount());
+        assertEquals(bedroom1GuestCountBefore+guestCount, bedroom1.guestCount());
     }
 
     @Test
     public void checkingGuestIntoHotelWithoutSpaceDoesNotIncreaseGuestCountForRoom(){
+        int bedroom1GuestCountBefore = bedroom1.guestCount();
         hotel.checkInGuests(partyTooLargeForAvailability);
-        assertEquals(0, bedroom1.guestCount());
+        assertEquals(bedroom1GuestCountBefore, bedroom1.guestCount());
+    }
+
+    @Test
+    public void attemptingToCheckGuestsIntoHotelWithoutSpaceDoesNotIncreaseOccupiedRoomCount(){
+        int occupiedRoomCountBefore = hotel.getOccupiedBedRooms().size();
+        hotel.checkInGuests(partyTooLargeForAvailability);
+        assertEquals(occupiedRoomCountBefore, hotel.getOccupiedBedRooms().size());
+    }
+
+    @Test
+    public void attemptingToCheckGuestsIntoHotelWithoutSpaceDoesNotDecreaseAvailableRoomCount(){
+        int availableRoomCountBefore = hotel.getAvailableBedRooms().size();
+        hotel.checkInGuests(partyTooLargeForAvailability);
+        assertEquals(availableRoomCountBefore, hotel.getAvailableBedRooms().size());
     }
 
     @Test
     public void addingABedroomUsingManageAvailableBedroomsMethodIncreasesBedroomCount(){
-        int bedroomCountBefore = hotel.getAvailableBedRooms().size();
-        assertEquals(1,bedroomCountBefore);
+        int availableBedroomCountBefore = hotel.getAvailableBedRooms().size();
         hotel.manageAvailableBedrooms(bedroom2,RoomManagementActions.ADD);
-        assertEquals(bedroomCountBefore+1, hotel.getAvailableBedRooms().size());
+        assertEquals(availableBedroomCountBefore+1, hotel.getAvailableBedRooms().size());
     }
 
     @Test
-    public void checkingGuestsIntoRoomRemovesItFromListOfAvailableRooms(){
-        int bedroomCountBefore = hotel.getAvailableBedRooms().size();
-        assertEquals(1,bedroomCountBefore);
+    public void checkingGuestsIntoRoomDecreasesNumberOfAvailableRooms(){
+        int availableBedroomCountBefore = hotel.getAvailableBedRooms().size();
         hotel.checkInGuests(guests);
-        assertEquals(0, hotel.getAvailableBedRooms().size());
+        assertEquals(availableBedroomCountBefore-1, hotel.getAvailableBedRooms().size());
     }
 
     @Test
-    public void checkingGuestsIntoRoomAddsItToListOfOccupiedRooms(){
-        int bedroomCountBefore = hotel.getOccupiedBedRooms().size();
-        assertEquals(0,bedroomCountBefore);
+    public void checkingGuestsIntoRoomIncreasesTheNumberOfOccupiedRooms(){
+        int occupiedBedroomCountBefore = hotel.getOccupiedBedRooms().size();
         hotel.checkInGuests(guests);
-        assertEquals(1, hotel.getOccupiedBedRooms().size());
+        assertEquals(occupiedBedroomCountBefore+1, hotel.getOccupiedBedRooms().size());
     }
 
     @Test
@@ -120,6 +134,45 @@ public class HotelTest {
         hotel.checkInGuests(guests);
         assertTrue(hotel.findGuestsForRoom(1).contains(guest1));
         assertTrue(hotel.findGuestsForRoom(1).contains(guest2));
+    }
+
+    @Test
+    public void checkingOutGuestsFromRoomSetsRoomGuestCountToZero(){
+        hotel.checkOutGuests(1);
+        assertEquals(0, bedroom1.guestCount());
+    }
+
+    @Test
+    public void checkingOutGuestsFromRoomDecreasesOccupiedRoomCount(){
+        hotel.checkInGuests(guests);
+        int occupiedRoomCount = hotel.getOccupiedBedRooms().size();
+        hotel.checkOutGuests(1);
+        assertEquals(occupiedRoomCount-1, hotel.getOccupiedBedRooms().size());
+    }
+
+    @Test
+    public void checkingOutGuestsFromRoomIncreaseAvailableRoomCount(){
+        hotel.checkInGuests(guests);
+        int availableRoomCount = hotel.getAvailableBedRooms().size();
+        hotel.checkOutGuests(1);
+        assertEquals(availableRoomCount+1, hotel.getAvailableBedRooms().size());
+    }
+
+    @Test
+    public void successfullyCheckingOutGuestsResultsInSuccessMessage(){
+        hotel.checkInGuests(guests);
+        String message = hotel.checkOutGuests(1);
+        assertEquals("Guests successfully checked out.", message);
+    }
+
+    @Test
+    public void canListVacantBedrooms(){
+        assertEquals(1, hotel.getAvailableBedRooms().size());
+    }
+
+    @Test
+    public void vacantRoomsHaveGuestListOfZero(){
+        assertEquals(0, hotel.getAvailableBedRooms().get(0).guestCount());
     }
 
 

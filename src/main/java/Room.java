@@ -46,4 +46,8 @@ public class Room {
     public ArrayList<Guest> getGuests() {
         return this.guests;
     }
+
+    public void removeGuestFromRoom(Guest guestToRemove) {
+        guests.remove(guestToRemove);
+    }
 }
